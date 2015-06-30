@@ -220,9 +220,13 @@ class Ant:
             weights.append(self.weigh(edge))
         
         # Choose one of them using a weighted probability.
-        total = sum(weights)
-        cumdist = list(itertools.accumulate(weights)) + [total]
-        return choices[bisect.bisect(cumdist, random.random() * total)]
+        # FIXME: Temporary solution
+        try:
+            total = sum(weights)
+            cumdist = list(itertools.accumulate(weights)) + [total]
+            return choices[bisect.bisect(cumdist, random.random() * total)]
+        except:
+            return choices[0]
 
     def make_move(self, dest):
         """Move to the *dest* node and return the edge traveled.
